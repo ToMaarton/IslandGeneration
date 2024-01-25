@@ -4,6 +4,7 @@ varying vec2 pos;
 
 uniform sampler2D colorMap;
 uniform sampler2D heightMap;
+uniform float waterlvl;
 uniform float width;
 uniform vec3 lightDir;
 void main() {
@@ -23,5 +24,7 @@ void main() {
     float brightness = dot(lightDir,normal);
     brightness = clamp(brightness, 0.2, 1.);
     col.rgb = col.rgb*brightness;
+
+    col = mix(col,vec4(0.,0.,1.,1.), clamp((waterlvl-height)/10.,0.,1.));
     gl_FragColor = col;
 }
